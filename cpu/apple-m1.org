@@ -7,6 +7,8 @@
 
 * Notes
 
+Compiled using:
+
 #+BEGIN_SRC sh
 brew tap railwaycat/emacsmacport
 brew install emacs-mac --with-modules --with-mac-metal --with-emacs-sexy-icon --with-native-comp

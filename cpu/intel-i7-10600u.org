@@ -7,9 +7,10 @@
 
 * Notes
 
-Emacs 28 built from git with:
+Emacs 28 built from git on Ubuntu 20.04 under Windows 10 WSLv2 with:
 
 #+BEGIN_SRC sh
+CC=/usr/bin/gcc-10 ./configure --with-gnutls=yes --with-x-toolkit=no --with-xpm=no --with-jpeg=no --with-png=no --with-gif=no --with-tiff=no --with-native-compilation --with-xml2
 #+END_SRC
 
 * Results

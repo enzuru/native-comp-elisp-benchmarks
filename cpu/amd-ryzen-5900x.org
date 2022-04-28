@@ -4,7 +4,19 @@
 - OS: GNU/Linux 5
 - Emacs: 28
 - Benchmarks: 1.14
-  
+
+* Notes
+
+On GNU Guix:
+
+#+BEGIN_SRC sh
+git clone https://github.com/flatwhatson/guix-channel.git
+guix install -L ./guix-channel emacs-native-comp
+guix pull
+guix search emacs-native-comp
+guix install emacs-native-comp
+#+END_SRC
+
 * Results
 
   | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |

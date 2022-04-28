@@ -1,3 +1,3 @@
 # elisp-benchmarks
 
-This is a repo of elisp-benchmarks I've run on different CPUs.
+This is a repo of elisp-benchmarks with native compilation that I've run on different CPUs.

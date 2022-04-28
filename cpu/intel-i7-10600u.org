@@ -5,6 +5,13 @@
 - Emacs: 28
 - Benchmarks: 1.14
 
+* Notes
+
+Emacs 28 built from git with:
+
+#+BEGIN_SRC sh
+#+END_SRC
+
 * Results
 
   | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |

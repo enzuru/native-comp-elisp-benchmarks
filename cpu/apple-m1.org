@@ -4,6 +4,13 @@
 - OS: macOS Monterey
 - Emacs: 28
 - Benchmarks: 1.14
+
+* Notes
+
+```
+brew tap railwaycat/emacsmacport
+brew install emacs-mac --with-modules --with-mac-metal --with-big-sur-icon --with-native-comp
+```
   
 * Results
 

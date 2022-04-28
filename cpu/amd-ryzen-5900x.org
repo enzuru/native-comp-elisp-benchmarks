@@ -3,7 +3,8 @@
 - CPU: AMD Ryzen 5900X
 - OS: GNU/Linux 5
 - Emacs: 28
-
+- Benchmarks: 1.14
+  
 * Results
 
   | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |

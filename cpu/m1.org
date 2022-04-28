@@ -1,8 +1,8 @@
 * Specs
 
-CPU: Apple M1
-OS: macOS Monterey
-Emacs: 28
+- CPU: Apple M1
+- OS: macOS Monterey
+- Emacs: 28
 
 * Results
 

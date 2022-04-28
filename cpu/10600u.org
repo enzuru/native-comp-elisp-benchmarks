@@ -1,8 +1,8 @@
 * Specs
 
-CPU: Intel i7-10600U
-OS: WSLv2 under Windows 10
-Emacs: 28
+- CPU: Intel i7-10600U
+- OS: WSLv2 under Windows 10
+- Emacs: 28
 
 * Results
 

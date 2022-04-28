@@ -1,10 +1,10 @@
-# elisp-benchmarks
+# elisp-benchmarks -- submit a PR with your own benchmark results!
 
 This is a repo of elisp-benchmarks with native compilation run on different CPUs.
 
-Feel free to submit an org file with your CPU.
+Submit an org file with your benchmark results!
 
-1. Run `elisp-benchmarks-run` to run the test and create the test results buffer
+1. Run the built-in Emacs `elisp-benchmarks-run` command to run the test and create the test results buffer
 2. Save the buffer as `cpu-name.org` in the `cpu/` folder
 3. Above the test results, Add a "Specs" section with your full CPU name, OS name + major version, and Emacs version (see existing CPU org files for an example)
 

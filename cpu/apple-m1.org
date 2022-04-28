@@ -7,10 +7,10 @@
 
 * Notes
 
-```
+#+BEGIN_SRC sh
 brew tap railwaycat/emacsmacport
-brew install emacs-mac --with-modules --with-mac-metal --with-big-sur-icon --with-native-comp
-```
+brew install emacs-mac --with-modules --with-mac-metal --with-emacs-sexy-icon --with-native-comp
+#+END_SRC
   
 * Results
 

@@ -2,6 +2,7 @@
 
 CPU: AMD Ryzen 5900X
 OS: GNU/Linux
+Emacs: 28
 
 * Results
 

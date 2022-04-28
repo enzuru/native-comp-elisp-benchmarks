@@ -1,4 +1,4 @@
-# elisp-benchmarks — submit a PR with your own benchmark results!
+# native-comp-elisp-benchmarks — submit a PR with your own benchmark results!
 
 This is a repo of elisp-benchmarks with native compilation run on different CPUs.
 

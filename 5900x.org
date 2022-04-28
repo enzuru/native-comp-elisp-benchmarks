@@ -1,6 +1,7 @@
 * Specs
 
 CPU: Ryzen 5900X
+OS: GNU/Linux
 
 * Results
 

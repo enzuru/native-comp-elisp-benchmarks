@@ -1,7 +1,7 @@
 * Specs
 
 - CPU: Core i7-2630QM
-- OS: GNU/Linux 5
+- OS: GNU/Linux 5.16
 - Emacs: 29
 - Benchmarks: 1.14
 

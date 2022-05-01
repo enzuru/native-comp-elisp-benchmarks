@@ -3,7 +3,7 @@
 - CPU: Intel Core2 T9600
 - OS: GNU/Linux - 5.15.26
 - Hardware: Dell Latitude E6500
-- Emacs: 29.0.5 (from master @ 2022-03-29)
+- Emacs: 29.0.50 (from master @ 2022-03-29)
 - Benchmarks: 1.14
 
 * Notes

@@ -16,7 +16,7 @@ Submit an org file with your benchmark results!
 1. Run the `elisp-benchmarks-run` command to run the test and create the test results buffer
 2. Save the buffer as `cpu-name.org` in the `cpu/` folder
 3. Above the test results, Add a "Specs" section with your full CPU name, OS name + version, Emacs version, and `elisp-benchmarks` version (see existing CPU org files for an example)
-4. You can add a "Notes" section too between "Specs" and "Results"
+4. You can optionally add a "Notes" section between "Specs" and "Results"
 
 I am not trying to be extremely scientific by strictly controlling for all variables (OS, distro, build flags, motherboard, background services, etc). This is just meant to be fun and give us some rough perspective on how well Emacs is running with native compilation on different CPUs.
 

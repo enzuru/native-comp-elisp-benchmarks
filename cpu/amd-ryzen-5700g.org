@@ -1,0 +1,40 @@
+* Specs
+- CPU:AMD Ryzen 5700G with Radeon Graphics
+- OS:Linux 6.2.13-arch1-1 x86_64 GNU/Linux
+- Emacs:29 
+- Benchmarks: 1.14
+
+* Notes
+#+BEGIN_SRC sh
+./configure --with-modules --without-compress-install --with-x-toolkit=no --with-gnutls --without-gconf --without-xwidgets --without-toolkit-scroll-bars --without-sqlite3 --without-xaw3d --without-gsettings --with-mailutils --with-native-compilation --with-json --with-harfbuzz --with-imagemagick --with-jpeg --with-png --with-rsvg --with-tiff --with-wide-int --with-xft --with-xml2 --with-xpm CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer" prefix=/usr/local
+#+END_SRC
+
+* Results
+
+  | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | bubble             |           0.60 |       0.10 |       1 |        0.70 |            0.02 |
+  | bubble-no-cons     |           0.76 |       0.00 |       0 |        0.76 |            0.01 |
+  | bytecomp           |           1.17 |       0.65 |      17 |        1.83 |            0.12 |
+  | dhrystone          |           1.67 |       0.00 |       0 |        1.67 |            0.07 |
+  | eieio              |           0.86 |       0.34 |       9 |        1.20 |            0.01 |
+  | fibn               |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-named-let     |           0.73 |       0.00 |       0 |        0.73 |            0.01 |
+  | fibn-rec           |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-tc            |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | flet               |           1.16 |       0.00 |       0 |        1.16 |            0.01 |
+  | inclist            |           1.71 |       0.00 |       0 |        1.71 |            0.01 |
+  | inclist-type-hints |           1.66 |       0.00 |       0 |        1.66 |            0.01 |
+  | listlen-tc         |           0.11 |       0.00 |       0 |        0.11 |            0.00 |
+  | map-closure        |           4.01 |       0.00 |       0 |        4.01 |            0.03 |
+  | nbody              |           1.02 |       0.18 |       1 |        1.20 |            0.04 |
+  | pack-unpack        |           0.37 |       0.07 |       2 |        0.44 |            0.01 |
+  | pack-unpack-old    |           1.19 |       0.15 |       4 |        1.34 |            0.01 |
+  | pcase              |           1.65 |       0.00 |       0 |        1.65 |            0.02 |
+  | pidigits           |           3.03 |       1.15 |      21 |        4.18 |            0.01 |
+  | scroll             |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | smie               |           1.10 |       0.08 |       2 |        1.18 |            0.02 |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | total              |          22.79 |       2.72 |      57 |       25.51 |            0.16 |
+
+

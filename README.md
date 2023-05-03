@@ -5,8 +5,9 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 ## High scores
 
 1. AMD Ryzen 5900X: 20s
-2. Apple M1: 40.37s
-3. Intel i7-9750H: 40.39s
+2. AMD Ryzen 5700G: 25.51s
+3. Apple M1: 40.37s
+4. Intel i7-9750H: 40.39s
 
 ## Submit your own
 

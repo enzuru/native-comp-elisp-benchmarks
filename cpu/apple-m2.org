@@ -3,6 +3,7 @@
 - Apple M2 Air, 24GB
 - MacOS Ventura 13.4.1
 - Emacs 28.2
+- Benchmarks: 1.14
 
 * Notes
 

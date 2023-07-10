@@ -9,11 +9,9 @@
 
 Compiled using:
 
-*Non-native-comp*: ~brew install emacs-mac~
-
-and 
-
-*Native-comp*: ~brew install emacs-mac --with-emacs-sexy-icon --with-librsvg --with-native-comp --with-starter~
+- *Non-native-comp*:: ~brew install emacs-mac~
+- *Native-comp*:: ~brew install emacs-mac --with-emacs-sexy-icon --with-librsvg --with-native-comp --with-starter~
+- *Native-comp+metal*:: ~brew install emacs-mac --with-emacs-sexy-icon --with-librsvg --with-mac-metal --with-native-compilation --with-starter~
 
 * Results (non-native-comp)
 
@@ -73,3 +71,32 @@ Using (gcmh-high-cons-threshold #x4000000)
   |--------------------+----------------+------------+---------+-------------+-----------------|
   | total              |          23.64 |       5.58 |     353 |       29.22 |            1.60 |
 
+* Results (native-comp+metal)
+
+Using (gcmh-high-cons-threshold #x4000000)
+
+  | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | bubble             |           0.78 |       0.09 |       1 |        0.87 |            0.00 |
+  | bubble-no-cons     |           1.34 |       0.01 |       0 |        1.35 |            0.01 |
+  | bytecomp           |           0.76 |       0.50 |      50 |        1.26 |            0.40 |
+  | dhrystone          |           1.51 |       0.00 |       0 |        1.51 |            0.01 |
+  | eieio              |           1.16 |       0.66 |      68 |        1.82 |            0.49 |
+  | fibn               |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-named-let     |           0.78 |       0.00 |       0 |        0.78 |            0.00 |
+  | fibn-rec           |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-tc            |           0.01 |       0.00 |       0 |        0.01 |            0.00 |
+  | flet               |           1.62 |       0.00 |       0 |        1.62 |            0.00 |
+  | inclist            |           1.03 |       0.00 |       0 |        1.03 |            0.01 |
+  | inclist-type-hints |           0.97 |       0.00 |       0 |        0.97 |            0.01 |
+  | listlen-tc         |           0.13 |       0.00 |       0 |        0.13 |            0.00 |
+  | map-closure        |           4.96 |       0.00 |       0 |        4.96 |            0.01 |
+  | nbody              |           1.02 |       0.18 |       1 |        1.20 |            0.00 |
+  | pack-unpack        |           0.24 |       0.16 |      17 |        0.41 |            0.13 |
+  | pack-unpack-old    |           0.34 |       0.34 |      35 |        0.68 |            0.26 |
+  | pcase              |           1.14 |       0.00 |       0 |        1.14 |            0.00 |
+  | pidigits           |           3.71 |       2.76 |     164 |        6.47 |            1.22 |
+  | scroll             |           1.24 |       0.19 |      15 |        1.43 |            0.00 |
+  | smie               |           1.04 |       0.28 |      28 |        1.32 |            0.00 |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | total              |          23.78 |       5.16 |     381 |       28.94 |            1.40 |

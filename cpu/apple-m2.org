@@ -9,9 +9,9 @@
 
 Compiled using:
 
-- *Non-native-comp*:: ~brew install emacs-mac~
-- *Native-comp*:: ~brew install emacs-mac --with-emacs-sexy-icon --with-librsvg --with-native-comp --with-starter~
-- *Native-comp+metal*:: ~brew install emacs-mac --with-emacs-sexy-icon --with-librsvg --with-mac-metal --with-native-compilation --with-starter~
+- *Non-native-comp* :: ~brew install emacs-mac~
+- *Native-comp* :: ~brew install emacs-mac --with-emacs-sexy-icon --with-librsvg --with-native-comp --with-starter~
+- *Native-comp+metal* :: ~brew install emacs-mac --with-emacs-sexy-icon --with-librsvg --with-mac-metal --with-native-compilation --with-starter~
 
 * Results (non-native-comp)
 

@@ -1,0 +1,298 @@
+* Specs
+:PROPERTIES:
+:CREATED_TIME: [2024-04-30 Tue 16:42]
+:END:
+
+- CPU: AMD Ryzen 7950X with 192GB DDR5 RAM at 4600MHz
+- OS: Gentoo Linux
+- Emacs: 30, commit b36fd07560fd12c5e819e808a6f0eb9579f77c25
+- Benchmarks: 1.14
+
+Emacs was compiled with the following CFLAGS:
+#+begin_src sh
+COMMON_FLAGS="-march=native -Ofast -fno-finite-math-only -pipe \
+-fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta \
+-fno-semantic-interposition"
+#+end_src
+
+My overclocking settings on an MSI MEG Godlike X670E motherboard are:
+- Performance Boost Overdrive: 150MHz
+- RAM: 4600MHz
+- Curve Optimizer: -25 on all cores
+
+The GCC version I used to build Emacs was: gcc version 14.0.1 20240421 (experimental) (Gentoo 14.0.1_pre20240421 p26
+
+and Emacs was built with the following patches applied:
+
+#+title: Use comp speed 3 by default
+#+begin_src diff
+diff --git a/lisp/emacs-lisp/comp.el b/lisp/emacs-lisp/comp.el
+index b35e1b97e9d..95d1e494ad6 100644
+--- a/lisp/emacs-lisp/comp.el
++++ b/lisp/emacs-lisp/comp.el
+@@ -43,7 +43,7 @@
+   "Emacs Lisp native compiler."
+   :group 'lisp)
+
+-(defcustom native-comp-speed 2
++(defcustom native-comp-speed 3
+   "Optimization level for native compilation, a number between -1 and 3.
+  -1 functions are kept in bytecode form and no native compilation is performed
+     (but *.eln files are still produced, and include the compiled code in
+#+end_src
+
+#+title: Pass more aggressive compiler options to libgccjit
+#+begin_src diff
+diff --git a/lisp/emacs-lisp/comp.el b/lisp/emacs-lisp/comp.el
+index 2ec55ed98ee..ca8e4574c3b 100644
+--- a/lisp/emacs-lisp/comp.el
++++ b/lisp/emacs-lisp/comp.el
+@@ -88,7 +88,7 @@ during bootstrap."
+   :type '(repeat regexp)
+   :version "28.1")
+
+-(defcustom native-comp-compiler-options nil
++(defcustom native-comp-compiler-options '("-march=znver4" "-Ofast" "-g0" "-fno-finite-math-only" "-fgraphite-identity" "-floop-nest-optimize" "-fdevirtualize-at-ltrans" "-fipa-pta" "-fno-semantic-interposition" "-flto=auto" "-fuse-linker-plugin")
+   "Command line options passed verbatim to GCC compiler.
+ Note that not all options are meaningful and some options might even
+ break your Emacs.  Use at your own risk.
+@@ -98,9 +98,7 @@ and above."
+   :type '(repeat string)
+   :version "28.1")
+
+-(defcustom native-comp-driver-options
+-  (cond ((eq system-type 'darwin) '("-Wl,-w"))
+-        ((eq system-type 'cygwin) '("-Wl,-dynamicbase")))
++(defcustom native-comp-driver-options '("-march=znver4" "-Ofast" "-g0" "-fno-finite-math-only" "-fgraphite-identity" "-floop-nest-optimize" "-fdevirtualize-at-ltrans" "-fipa-pta" "-fno-semantic-interposition" "-flto=auto" "-fuse-linker-plugin")
+   "Options passed verbatim to the native compiler's back-end driver.
+ Note that not all options are meaningful; typically only the options
+ affecting the assembler and linker are likely to be useful.
+#+end_src
+
+#+title: Use lexical binding for all files (dangerous!)
+#+begin_src diff
+diff --git a/src/lread.c b/src/lread.c
+index 255b6e914d9..d5050878e8b 100644
+--- a/src/lread.c
++++ b/src/lread.c
+@@ -1053,136 +1053,6 @@ DEFUN ("get-file-char", Fget_file_char, Sget_file_char, 0, 0, 0,
+
+ 
+
+-/* Return true if the lisp code read using READCHARFUN defines a non-nil
+-   `lexical-binding' file variable.  After returning, the stream is
+-   positioned following the first line, if it is a comment or #! line,
+-   otherwise nothing is read.  */
+-
+-static bool
+-lisp_file_lexically_bound_p (Lisp_Object readcharfun)
+-{
+-  int ch = READCHAR;
+-
+-  if (ch == '#')
+-    {
+-      ch = READCHAR;
+-      if (ch != '!')
+-        {
+-          UNREAD (ch);
+-          UNREAD ('#');
+-          return 0;
+-        }
+-      while (ch != '\n' && ch != EOF)
+-        ch = READCHAR;
+-      if (ch == '\n') ch = READCHAR;
+-      /* It is OK to leave the position after a #! line, since
+-	 that is what read0 does.  */
+-    }
+-
+-  if (ch != ';')
+-    /* The first line isn't a comment, just give up.  */
+-    {
+-      UNREAD (ch);
+-      return 0;
+-    }
+-  else
+-    /* Look for an appropriate file-variable in the first line.  */
+-    {
+-      bool rv = 0;
+-      enum {
+-	NOMINAL, AFTER_FIRST_DASH, AFTER_ASTERIX
+-      } beg_end_state = NOMINAL;
+-      bool in_file_vars = 0;
+-
+-#define UPDATE_BEG_END_STATE(ch)				\
+-  if (beg_end_state == NOMINAL)					\
+-    beg_end_state = (ch == '-' ? AFTER_FIRST_DASH : NOMINAL);	\
+-  else if (beg_end_state == AFTER_FIRST_DASH)			\
+-    beg_end_state = (ch == '*' ? AFTER_ASTERIX : NOMINAL);	\
+-  else if (beg_end_state == AFTER_ASTERIX)			\
+-    {								\
+-      if (ch == '-')						\
+-	in_file_vars = !in_file_vars;				\
+-      beg_end_state = NOMINAL;					\
+-    }
+-
+-      /* Skip until we get to the file vars, if any.  */
+-      do
+-	{
+-	  ch = READCHAR;
+-	  UPDATE_BEG_END_STATE (ch);
+-	}
+-      while (!in_file_vars && ch != '\n' && ch != EOF);
+-
+-      while (in_file_vars)
+-	{
+-	  char var[100], val[100];
+-	  unsigned i;
+-
+-	  ch = READCHAR;
+-
+-	  /* Read a variable name.  */
+-	  while (ch == ' ' || ch == '\t')
+-	    ch = READCHAR;
+-
+-	  i = 0;
+-	  beg_end_state = NOMINAL;
+-	  while (ch != ':' && ch != '\n' && ch != EOF && in_file_vars)
+-	    {
+-	      if (i < sizeof var - 1)
+-		var[i++] = ch;
+-	      UPDATE_BEG_END_STATE (ch);
+-	      ch = READCHAR;
+-	    }
+-
+-	  /* Stop scanning if no colon was found before end marker.  */
+-	  if (!in_file_vars || ch == '\n' || ch == EOF)
+-	    break;
+-
+-	  while (i > 0 && (var[i - 1] == ' ' || var[i - 1] == '\t'))
+-	    i--;
+-	  var[i] = '\0';
+-
+-	  if (ch == ':')
+-	    {
+-	      /* Read a variable value.  */
+-	      ch = READCHAR;
+-
+-	      while (ch == ' ' || ch == '\t')
+-		ch = READCHAR;
+-
+-	      i = 0;
+-	      beg_end_state = NOMINAL;
+-	      while (ch != ';' && ch != '\n' && ch != EOF && in_file_vars)
+-		{
+-		  if (i < sizeof val - 1)
+-		    val[i++] = ch;
+-		  UPDATE_BEG_END_STATE (ch);
+-		  ch = READCHAR;
+-		}
+-	      if (! in_file_vars)
+-		/* The value was terminated by an end-marker, which remove.  */
+-		i -= 3;
+-	      while (i > 0 && (val[i - 1] == ' ' || val[i - 1] == '\t'))
+-		i--;
+-	      val[i] = '\0';
+-
+-	      if (strcmp (var, "lexical-binding") == 0)
+-		/* This is it...  */
+-		{
+-		  rv = (strcmp (val, "nil") != 0);
+-		  break;
+-		}
+-	    }
+-	}
+-
+-      while (ch != '\n' && ch != EOF)
+-	ch = READCHAR;
+-
+-      return rv;
+-    }
+-}
+-
+ /* Value is a version number of byte compiled code if the file
+    associated with file descriptor FD is a compiled Lisp file that's
+    safe to load.  Only files compiled with Emacs can be loaded.  */
+@@ -1583,12 +1453,6 @@ Return t if the file exists and loads successfully.  */)
+     Vloads_in_progress = Fcons (found, Vloads_in_progress);
+   }
+
+-  /* All loads are by default dynamic, unless the file itself specifies
+-     otherwise using a file-variable in the first line.  This is bound here
+-     so that it takes effect whether or not we use
+-     Vload_source_file_function.  */
+-  specbind (Qlexical_binding, Qnil);
+-
+   Lisp_Object found_eff =
+     is_native_elisp
+     ? compute_found_effective (found)
+@@ -1785,8 +1649,7 @@ Return t if the file exists and loads successfully.  */)
+     }
+   else
+     {
+-      if (lisp_file_lexically_bound_p (Qget_file_char))
+-        Fset (Qlexical_binding, Qt);
++      Fset (Qlexical_binding, Qt);
+
+       if (! version || version >= 22)
+         readevalloop (Qget_file_char, &input, hist_file_name,
+@@ -2473,7 +2336,7 @@ readevalloop (Lisp_Object readcharfun,
+      lexical environment, otherwise, turn off lexical binding.  */
+   lex_bound = find_symbol_value (Qlexical_binding);
+   specbind (Qinternal_interpreter_environment,
+-	    (NILP (lex_bound) || BASE_EQ (lex_bound, Qunbound)
++	    (BASE_EQ (lex_bound, Qunbound)
+         ? Qnil : list1 (Qt)));
+   specbind (Qmacroexp__dynvars, Vmacroexp__dynvars);
+
+@@ -2663,7 +2526,7 @@ This function preserves the position of point.  */)
+   specbind (Qstandard_output, tem);
+   record_unwind_protect_excursion ();
+   BUF_TEMP_SET_PT (XBUFFER (buf), BUF_BEGV (XBUFFER (buf)));
+-  specbind (Qlexical_binding, lisp_file_lexically_bound_p (buf) ? Qt : Qnil);
++  specbind (Qlexical_binding, Qt);
+   BUF_TEMP_SET_PT (XBUFFER (buf), BUF_BEGV (XBUFFER (buf)));
+   readevalloop (buf, 0, filename,
+        !NILP (printflag), unibyte, Qnil, Qnil, Qnil);
+@@ -5913,8 +5776,7 @@ with lexical binding.
+ This variable is automatically set from the file variables of an
+ interpreted Lisp file read using `load'.  Unlike other file local
+ variables, this must be set in the first line of a file.  */);
+-  Vlexical_binding = Qnil;
+-  Fmake_variable_buffer_local (Qlexical_binding);
++  Vlexical_binding = Qt;
+
+   DEFVAR_LISP ("eval-buffer-list", Veval_buffer_list,
+           doc: /* List of buffers being read from by calls to `eval-buffer' and `eval-region'.  */);
+#+end_src
+
+* Results
+:PROPERTIES:
+:CREATED_TIME: [2024-04-30 Tue 16:49]
+:END:
+
+| test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
+|--------------------+----------------+------------+---------+-------------+-----------------|
+| bubble             |           0.42 |       0.05 |       0 |        0.47 |            0.01 |
+| bubble-no-cons     |           0.56 |       0.00 |       0 |        0.56 |            0.02 |
+| bytecomp           |           0.95 |       0.72 |      17 |        1.67 |            0.67 |
+| dhrystone          |           1.00 |       0.00 |       0 |        1.00 |            0.01 |
+| eieio              |           0.53 |       0.74 |      19 |        1.27 |            0.64 |
+| fibn               |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+| fibn-named-let     |           0.49 |       0.00 |       0 |        0.49 |            0.00 |
+| fibn-rec           |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+| fibn-tc            |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+| flet               |           0.69 |       0.00 |       0 |        0.69 |            0.00 |
+| font-lock          |           0.35 |       0.21 |       5 |        0.56 |            0.03 |
+| inclist            |           0.56 |       0.00 |       0 |        0.56 |            0.00 |
+| inclist-type-hints |           0.52 |       0.00 |       0 |        0.52 |            0.00 |
+| listlen-tc         |           0.08 |       0.00 |       0 |        0.08 |            0.00 |
+| map-closure        |           2.58 |       0.00 |       0 |        2.58 |            0.03 |
+| nbody              |           0.62 |       0.11 |       1 |        0.73 |            0.03 |
+| pack-unpack        |           0.15 |       0.27 |       7 |        0.42 |            0.00 |
+| pack-unpack-old    |           0.22 |       0.53 |      14 |        0.75 |            0.00 |
+| pcase              |           1.12 |       0.00 |       0 |        1.12 |            0.05 |
+| pidigits           |           1.75 |       3.89 |      70 |        5.63 |            0.02 |
+| scroll             |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+| smie               |           0.73 |       0.38 |       9 |        1.12 |            0.00 |
+|--------------------+----------------+------------+---------+-------------+-----------------|
+| total              |          13.33 |       6.90 |     143 |       20.23 |            0.93 |

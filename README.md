@@ -4,7 +4,7 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 
 ## High scores
 
-1. AMD Ryzen 7950X: 13.33s
+1. AMD Ryzen 7950X: 14.36s
 2. AMD Ryzen 5900X: 20s
 3. AMD Ryzen 5700G: 25.51s
 4. Apple M2: 28.94s

@@ -15,15 +15,16 @@
 #+end_src
 
 ** Init.el
-
+#+begin_src elisp 
 (setq native-comp-speed 3)
 
-"C-h o 'native-comp-eln-load-path'"
+;; "C-h o 'native-comp-eln-load-path'"
 (native-compile-async "/usr/lib/emacs/30.0.50/native-lisp" 'recursively)
 
-(setq native-comp-compiler-options '("-march=znver3" "-Ofast" "-g0" "-fno-finite-math-only" "-fgraphite-identity" "-floop-nest-optimize" "-fdevirtualize-at-ltrans" "-fipa-pta" "-fno-semantic-interposition" "-flto=auto"          "-fuse-linker-plugin"))
+(setq native-comp-compiler-options '("-march=znver3" "-Ofast" "-g0" "-fno-finite-math-only" "-fgraphite-identity" "-floop-nest-optimize" "-fdevirtualize-at-ltrans" "-fipa-pta" "-fno-semantic-interposition" "-flto=auto" "-fuse-linker-plugin"))
 
 (setq native-comp-driver-options '("-march=znver3" "-Ofast" "-g0" "-fno-finite-math-only" "-fgraphite-identity" "-floop-nest-optimize" "-fdevirtualize-at-ltrans" "-fipa-pta" "-fno-semantic-interposition" "-flto=auto" "-fuse-linker-plugin"))
+#+end_src 
 
 * Results
 

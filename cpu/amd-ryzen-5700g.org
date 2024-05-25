@@ -1,40 +1,59 @@
-* Specs
-- CPU:AMD Ryzen 5700G with Radeon Graphics
-- OS:Linux 6.2.13-arch1-1 x86_64 GNU/Linux
-- Emacs:29 
-- Benchmarks: 1.14
+* Spec
+- CPU: AMD Ryzen 7 5700G
+- OS: Arch Linux (kernel 6.9.1 tkg)
+- Emacs: 30
+- Benchmarks: 1.16
 
-* Notes
-#+BEGIN_SRC sh
-./configure --with-modules --without-compress-install --with-x-toolkit=no --with-gnutls --without-gconf --without-xwidgets --without-toolkit-scroll-bars --without-sqlite3 --without-xaw3d --without-gsettings --with-mailutils --with-native-compilation --with-json --with-harfbuzz --with-imagemagick --with-jpeg --with-png --with-rsvg --with-tiff --with-wide-int --with-xft --with-xml2 --with-xpm CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer" prefix=/usr/local
-#+END_SRC
+#+begin_src sh
+./autogen.sh \
+       && ./configure CFLAGS="-march=native -Ofast -fno-finite-math-only -pipe \
+-fgraphite-identity -floop-nest-optimize -fdevirtualize-at-ltrans -fipa-pta \
+-fno-semantic-interposition" \
+--with-modules --without-compress-install --with-x-toolkit=lucid \
+--with-xft --with-xaw3d --without-toolkit-scroll-bars --without-gsettings \
+--with-gconf --with-mailutils --with-native-compilation=aot --with-tree-sitter --without-cairo 
+#+end_src
+
+** Init.el
+#+begin_src elisp 
+(setq native-comp-speed 3)
+
+;; "C-h o 'native-comp-eln-load-path'"
+(native-compile-async "/usr/lib/emacs/30.0.50/native-lisp" 'recursively)
+
+(setq native-comp-compiler-options '("-march=znver3" "-Ofast" "-g0" "-fno-finite-math-only" "-fgraphite-identity" "-floop-nest-optimize" "-fdevirtualize-at-ltrans" "-fipa-pta" "-fno-semantic-interposition" "-flto=auto" "-fuse-linker-plugin"))
+
+(setq native-comp-driver-options '("-march=znver3" "-Ofast" "-g0" "-fno-finite-math-only" "-fgraphite-identity" "-floop-nest-optimize" "-fdevirtualize-at-ltrans" "-fipa-pta" "-fno-semantic-interposition" "-flto=auto" "-fuse-linker-plugin"))
+#+end_src 
 
 * Results
 
   | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
   |--------------------+----------------+------------+---------+-------------+-----------------|
-  | bubble             |           0.60 |       0.10 |       1 |        0.70 |            0.02 |
-  | bubble-no-cons     |           0.76 |       0.00 |       0 |        0.76 |            0.01 |
-  | bytecomp           |           1.17 |       0.65 |      17 |        1.83 |            0.12 |
-  | dhrystone          |           1.67 |       0.00 |       0 |        1.67 |            0.07 |
-  | eieio              |           0.86 |       0.34 |       9 |        1.20 |            0.01 |
+  | bubble             |           0.54 |       0.07 |       1 |        0.61 |            0.06 |
+  | bubble-no-cons     |           0.73 |       0.00 |       0 |        0.73 |            0.00 |
+  | bytecomp           |           1.10 |       0.24 |       7 |        1.34 |            0.07 |
+  | dhrystone          |           1.52 |       0.00 |       0 |        1.52 |            0.03 |
+  | eieio              |           0.75 |       0.31 |       9 |        1.05 |            0.02 |
   | fibn               |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
-  | fibn-named-let     |           0.73 |       0.00 |       0 |        0.73 |            0.01 |
+  | fibn-named-let     |           0.78 |       0.00 |       0 |        0.78 |            0.01 |
   | fibn-rec           |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
   | fibn-tc            |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
-  | flet               |           1.16 |       0.00 |       0 |        1.16 |            0.01 |
-  | inclist            |           1.71 |       0.00 |       0 |        1.71 |            0.01 |
-  | inclist-type-hints |           1.66 |       0.00 |       0 |        1.66 |            0.01 |
+  | flet               |           0.90 |       0.00 |       0 |        0.90 |            0.00 |
+  | font-lock          |           0.73 |       0.14 |       4 |        0.87 |            0.02 |
+  | inclist            |           0.78 |       0.00 |       0 |        0.78 |            0.00 |
+  | inclist-type-hints |           0.77 |       0.00 |       0 |        0.77 |            0.00 |
   | listlen-tc         |           0.11 |       0.00 |       0 |        0.11 |            0.00 |
-  | map-closure        |           4.01 |       0.00 |       0 |        4.01 |            0.03 |
-  | nbody              |           1.02 |       0.18 |       1 |        1.20 |            0.04 |
-  | pack-unpack        |           0.37 |       0.07 |       2 |        0.44 |            0.01 |
-  | pack-unpack-old    |           1.19 |       0.15 |       4 |        1.34 |            0.01 |
-  | pcase              |           1.65 |       0.00 |       0 |        1.65 |            0.02 |
-  | pidigits           |           3.03 |       1.15 |      21 |        4.18 |            0.01 |
+  | map-closure        |           3.51 |       0.00 |       0 |        3.51 |            0.01 |
+  | nbody              |           0.97 |       0.11 |       1 |        1.08 |            0.06 |
+  | pack-unpack        |           0.20 |       0.07 |       2 |        0.27 |            0.01 |
+  | pack-unpack-old    |           0.34 |       0.13 |       4 |        0.48 |            0.01 |
+  | pcase              |           1.52 |       0.00 |       0 |        1.52 |            0.01 |
+  | pidigits           |           2.27 |       1.09 |      21 |        3.36 |            0.08 |
   | scroll             |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
-  | smie               |           1.10 |       0.08 |       2 |        1.18 |            0.02 |
+  | smie               |           1.03 |       0.08 |       2 |        1.11 |            0.03 |
   |--------------------+----------------+------------+---------+-------------+-----------------|
-  | total              |          22.79 |       2.72 |      57 |       25.51 |            0.16 |
+  | total              |          18.55 |       2.24 |      51 |       20.79 |            0.15 |
 
-
+* Credit
+ [[https://www.reddit.com/r/emacs/comments/131354i/guide_compile_your_own_emacs_to_make_it_really/][Guide Compile your own Emacs to make it really really fast, on Windows]] and [[https://github.com/D4lj337/native-comp-elisp-benchmarks/blob/master/cpu/amd-ryzen-7950x.org][amd-ryzen-7950x.org]]

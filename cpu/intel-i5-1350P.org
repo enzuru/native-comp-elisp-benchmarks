@@ -1,0 +1,47 @@
+* Spec
+
+- CPU: Intel i5 1350P
+- OS: Arch Linux (kernel 6.10.8)
+- Emacs: 29.4
+- Benchmarks: 1.16
+
+* Notes
+
+Emacs 29 installed from archlinux repo =emacs-nativecomp=
+
+Init.el for completeness: https://github.com/port19x/dotfiles/blob/dc5d28c8842ba846e6ff28455e3df6f10ed06397/init.el
+
+Laptop was plugged into power
+
+* Results
+
+#+begin_src elisp
+(setq gc-cons-threshold (* 8 1024 1024))
+#+end_src
+
+  | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | bubble             |           0.50 |       0.11 |       1 |        0.61 |            0.06 |
+  | bubble-no-cons     |           0.50 |       0.00 |       0 |        0.50 |            0.00 |
+  | bytecomp           |           1.07 |       1.86 |      34 |        2.93 |            0.18 |
+  | dhrystone          |           1.29 |       0.00 |       0 |        1.29 |            0.00 |
+  | eieio              |           0.61 |       0.93 |      18 |        1.54 |            0.06 |
+  | fibn               |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-named-let     |           0.96 |       0.00 |       0 |        0.96 |            0.01 |
+  | fibn-rec           |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-tc            |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | flet               |           0.96 |       0.00 |       0 |        0.96 |            0.00 |
+  | font-lock          |           0.53 |       0.41 |       8 |        0.94 |            0.00 |
+  | inclist            |           1.26 |       0.00 |       0 |        1.26 |            0.01 |
+  | inclist-type-hints |           1.22 |       0.00 |       0 |        1.22 |            0.01 |
+  | listlen-tc         |           0.17 |       0.00 |       0 |        0.17 |            0.00 |
+  | map-closure        |           2.88 |       0.00 |       0 |        2.88 |            0.00 |
+  | nbody              |           1.03 |       0.16 |       1 |        1.19 |            0.11 |
+  | pack-unpack        |           0.21 |       0.20 |       4 |        0.41 |            0.00 |
+  | pack-unpack-old    |           0.28 |       0.45 |       9 |        0.73 |            0.01 |
+  | pcase              |           1.34 |       0.00 |       0 |        1.34 |            0.00 |
+  | pidigits           |           2.64 |       2.62 |      43 |        5.26 |            0.03 |
+  | scroll             |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | smie               |           0.78 |       0.26 |       5 |        1.04 |            0.01 |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | total              |          18.23 |       7.00 |     123 |       25.23 |            0.23 |

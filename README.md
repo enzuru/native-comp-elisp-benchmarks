@@ -8,10 +8,11 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 2. AMD Ryzen 5900X: 20s
 3. Intel i5 1350P: 25.23s
 4. AMD Ryzen 5700G: 25.51s
-5. Apple M2: 28.94s
-6. Intel i7-1355U: 29.31s
-7. Apple M1: 40.37s
-8. Intel i7-9750H: 40.39s
+5. Intel Core i9-11900K: 26.42s
+6. Apple M2: 28.94s
+7. Intel i7-1355U: 29.31s
+8. Apple M1: 40.37s
+9. Intel i7-9750H: 40.39s
 
 ## Submit your own
 

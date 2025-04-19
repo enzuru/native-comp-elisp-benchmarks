@@ -1,0 +1,41 @@
+* Specs
+
+- CPU: Intel Core i9-11900K
+- OS: Windows 11 Pro 23H2 22631.4317
+- Emacs: 31.0.50 (=021c0ba116e00d20cb006e7441c20d21315ec202= from master @ 2024-11-02)
+- Benchmarks: 1.16
+
+* Notes
+Compiled using MSYS2 ucrt64 runtime. [[https://gist.github.com/LdBeth/d663a7d3ea27776bfe211241ad7fa5e5]]
+
+The Emacs installation directory and =.eln= file type are set to be
+excluded from Windows Defender Anti Virus scan.
+
+* Results
+
+  | test               | non-gc avg (s) | gc avg (s) | gcs avg | tot avg (s) | tot avg err (s) |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | bubble             |           0.49 |       0.07 |       1 |        0.56 |            0.03 |
+  | bubble-no-cons     |           0.48 |       0.00 |       0 |        0.48 |            0.00 |
+  | bytecomp           |           0.94 |       0.18 |      11 |        1.12 |            0.02 |
+  | dhrystone          |           1.33 |       0.00 |       0 |        1.33 |            0.00 |
+  | eieio              |           0.86 |       0.22 |      14 |        1.08 |            0.00 |
+  | fibn               |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-named-let     |           0.90 |       0.00 |       0 |        0.90 |            0.00 |
+  | fibn-rec           |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | fibn-tc            |           0.00 |       0.00 |       0 |        0.00 |            0.00 |
+  | flet               |           0.77 |       0.00 |       0 |        0.77 |            0.01 |
+  | font-lock          |           0.41 |       0.03 |       2 |        0.44 |            0.00 |
+  | inclist            |           0.88 |       0.00 |       0 |        0.88 |            0.01 |
+  | inclist-type-hints |           0.83 |       0.00 |       0 |        0.83 |            0.00 |
+  | listlen-tc         |           0.10 |       0.00 |       0 |        0.10 |            0.00 |
+  | map-closure        |           3.56 |       0.00 |       0 |        3.56 |            0.04 |
+  | nbody              |           1.13 |       0.16 |       1 |        1.29 |            0.05 |
+  | pack-unpack        |           0.21 |       0.05 |       3 |        0.26 |            0.01 |
+  | pack-unpack-old    |           0.32 |       0.11 |       7 |        0.43 |            0.00 |
+  | pcase              |           1.65 |       0.00 |       0 |        1.65 |            0.00 |
+  | pidigits           |           4.34 |       1.95 |      34 |        6.28 |            1.58 |
+  | scroll             |           3.40 |       0.02 |       1 |        3.42 |            0.03 |
+  | smie               |           0.97 |       0.07 |       4 |        1.04 |            0.00 |
+  |--------------------+----------------+------------+---------+-------------+-----------------|
+  | total              |          23.57 |       2.86 |      78 |       26.42 |            1.58 |

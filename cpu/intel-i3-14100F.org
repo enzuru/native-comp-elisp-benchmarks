@@ -1,0 +1,85 @@
+* Spec
+
+- CPU: Intel i3 14100F
+- OS: Arch Linux (kernel 6.14.6)
+- Emacs: 30.1
+- Benchmarks: 1.16
+
+* Notes
+
+Emacs 30 installed from archlinux repo =emacs=
+
+Blank =emacs -Q=
+
+For better comparability I include both the results with my usual 8MB gc-cons-threshold and without
+
+* Results
+
+#+begin_src elisp
+(setq gc-cons-threshold (* 8 1024 1024))
+#+end_src
+
+  | test               | non-gc (s) | gc (s) | gcs | total (s) | err |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | bubble             |       0.40 |   0.05 |   1 |      0.46 |  0% |
+  | bubble-no-cons     |       0.51 |   0.00 |   0 |      0.51 |  0% |
+  | bytecomp           |       1.02 |   0.35 |  14 |      1.37 |  0% |
+  | dhrystone          |       1.22 |   0.00 |   0 |      1.22 |  0% |
+  | eieio              |       0.56 |   0.42 |  18 |      0.98 |  0% |
+  | fibn               |       0.00 |   0.00 |   0 |      0.00 |  3% |
+  | fibn-named-let     |       1.09 |   0.00 |   0 |      1.09 |  0% |
+  | fibn-rec           |       0.00 |   0.00 |   0 |      0.00 |  8% |
+  | fibn-tc            |       0.00 |   0.00 |   0 |      0.00 |  4% |
+  | flet               |       1.16 |   0.00 |   0 |      1.16 |  1% |
+  | font-lock          |       0.35 |   0.07 |   3 |      0.42 |  0% |
+  | inclist            |       0.68 |   0.00 |   0 |      0.68 |  1% |
+  | inclist-type-hints |       0.59 |   0.00 |   0 |      0.59 |  1% |
+  | listlen-tc         |       0.11 |   0.00 |   0 |      0.11 |  1% |
+  | map-closure        |       2.88 |   0.00 |   0 |      2.88 |  1% |
+  | nbody              |       0.90 |   0.10 |   1 |      1.00 |  1% |
+  | pack-unpack        |       0.17 |   0.10 |   4 |      0.27 |  1% |
+  | pack-unpack-old    |       0.28 |   0.19 |   8 |      0.47 |  1% |
+  | pcase              |       1.79 |   0.00 |   0 |      1.79 |  0% |
+  | pidigits           |       1.92 |   1.44 |  43 |      3.36 |  1% |
+  | scroll             |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | scroll-nonascii    |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | smie               |       0.77 |   0.13 |   5 |      0.89 |  1% |
+  | smie-nonascii      |       1.50 |   0.12 |   5 |      1.62 |  0% |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | total              |      17.90 |   2.97 | 102 |     20.87 |  0% |
+
+
+* Results with default =gc-cons-threshold=
+
+#+begin_src elisp
+(setq gc-cons-threshold 800000)
+#+end_src
+
+  | test               | non-gc (s) | gc (s) | gcs | total (s) | err |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | bubble             |       0.46 |   0.08 |   1 |      0.54 |  1% |
+  | bubble-no-cons     |       0.52 |   0.00 |   0 |      0.52 |  0% |
+  | bytecomp           |       1.12 |   0.72 |  14 |      1.84 |  0% |
+  | dhrystone          |       1.24 |   0.00 |   0 |      1.24 |  0% |
+  | eieio              |       0.57 |   0.90 |  18 |      1.46 |  0% |
+  | fibn               |       0.00 |   0.00 |   0 |      0.00 |  3% |
+  | fibn-named-let     |       1.08 |   0.00 |   0 |      1.08 |  0% |
+  | fibn-rec           |       0.00 |   0.00 |   0 |      0.00 | 12% |
+  | fibn-tc            |       0.00 |   0.00 |   0 |      0.00 |  1% |
+  | flet               |       1.14 |   0.00 |   0 |      1.14 |  1% |
+  | font-lock          |       0.35 |   0.15 |   3 |      0.51 |  1% |
+  | inclist            |       2.35 |   0.00 |   0 |      2.35 |  0% |
+  | inclist-type-hints |       1.89 |   0.00 |   0 |      1.89 |  0% |
+  | listlen-tc         |       0.11 |   0.00 |   0 |      0.11 |  0% |
+  | map-closure        |       2.87 |   0.00 |   0 |      2.87 |  1% |
+  | nbody              |       0.91 |   0.13 |   1 |      1.03 |  1% |
+  | pack-unpack        |       0.17 |   0.20 |   4 |      0.38 |  0% |
+  | pack-unpack-old    |       0.29 |   0.41 |   8 |      0.70 |  1% |
+  | pcase              |       1.81 |   0.00 |   0 |      1.81 |  0% |
+  | pidigits           |       1.90 |   2.58 |  43 |      4.48 |  1% |
+  | scroll             |       1.21 |   0.15 |   3 |      1.36 |  1% |
+  | scroll-nonascii    |       2.63 |   0.25 |   5 |      2.88 |  0% |
+  | smie               |       0.74 |   0.25 |   5 |      0.99 |  0% |
+  | smie-nonascii      |       1.50 |   0.25 |   5 |      1.76 |  1% |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | total              |      24.88 |   6.07 | 110 |     30.95 |  0% |

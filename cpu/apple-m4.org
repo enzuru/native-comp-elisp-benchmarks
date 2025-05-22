@@ -7,7 +7,7 @@
 
 * Notes
 
-Emacs 30 installed from d12frosted/homebrew-emacs-plus
+Emacs 30 installed from [[https://github.com/d12frosted/homebrew-emacs-plus][homebrew-emacs-plus]]
 
 Otherwise blank =emacs -Q=
 

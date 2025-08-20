@@ -5,15 +5,15 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 ## High scores
 
 1. AMD Ryzen 7950X: 14.36s
-2. Apple M4: 16.01s
-3. AMD Ryzen 5900X: 20s
-4. Intel i3 14100F: 20.87s
-5. Apple M3: 24.13s
-6. Intel i5 1350P: 25.23s
-7. AMD Ryzen 5700G: 25.51s
-8. Intel Core i9-11900K: 26.42s
-9. Apple M2: 28.94s
-10. Intel i7-1355U: 29.31s
+2. AMD Ryzen 9 9900X: 15.04s
+3. Apple M4: 16.01s
+4. AMD Ryzen 5900X: 20s
+5. Intel Core i3 14100F: 20.87s
+6. Intel Core i5 12500H: 21.37s
+7. Apple M3: 24.13s
+8. Intel i5 1350P: 25.23s
+9. AMD Ryzen 5700G: 25.51s
+10. Intel Core i9 11900K: 26.42s
 
 ## Submit your own
 

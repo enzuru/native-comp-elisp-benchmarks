@@ -1,0 +1,40 @@
+* Specs
+- CPU: AMD Ryzen 9 9900X
+- OS: NixOS 25.11 (Xantusia) x86_64
+- Emacs: GNU Emacs 30.1
+- Benchmarks: 1.16
+
+* Notes
+only notable thing is that Its Doom emacs with little to no customization
+
+
+* Results
+
+  | test               | non-gc (s) | gc (s) | gcs | total (s) | err |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | bubble             |       0.34 |   0.07 |   1 |      0.41 |  2% |
+  | bubble-no-cons     |       0.48 |   0.00 |   0 |      0.48 |  0% |
+  | bytecomp           |       0.55 |   0.05 |   1 |      0.60 |  0% |
+  | dhrystone          |       1.00 |   0.00 |   0 |      1.00 |  0% |
+  | eieio              |       0.41 |   0.09 |   2 |      0.51 |  1% |
+  | fibn               |       0.00 |   0.00 |   0 |      0.00 |  2% |
+  | fibn-named-let     |       0.65 |   0.00 |   0 |      0.65 |  0% |
+  | fibn-rec           |       0.00 |   0.00 |   0 |      0.00 |  9% |
+  | fibn-tc            |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | flet               |       0.91 |   0.00 |   0 |      0.91 |  0% |
+  | font-lock          |       0.30 |   0.00 |   0 |      0.30 |  0% |
+  | inclist            |       0.57 |   0.00 |   0 |      0.57 |  0% |
+  | inclist-type-hints |       0.56 |   0.00 |   0 |      0.56 |  0% |
+  | listlen-tc         |       0.08 |   0.00 |   0 |      0.08 |  0% |
+  | map-closure        |       2.30 |   0.00 |   0 |      2.30 |  0% |
+  | nbody              |       0.65 |   0.11 |   1 |      0.76 |  1% |
+  | pack-unpack        |       0.12 |   0.00 |   0 |      0.12 |  0% |
+  | pack-unpack-old    |       0.22 |   0.05 |   1 |      0.26 |  0% |
+  | pcase              |       1.39 |   0.00 |   0 |      1.39 |  0% |
+  | pidigits           |       1.70 |   0.68 |   5 |      2.38 |  0% |
+  | scroll             |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | scroll-nonascii    |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | smie               |       0.60 |   0.00 |   0 |      0.60 |  0% |
+  | smie-nonascii      |       1.16 |   0.00 |   0 |      1.16 |  0% |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | total              |      13.98 |   1.06 |  11 |     15.04 |  0% |

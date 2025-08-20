@@ -1,0 +1,39 @@
+* Specs
+- CPU: 12th Gen Intel Core i5-12500H
+- OS: NixOS 25.11 (Xantusia) x86_64
+- Emacs: GNU Emacs 30.1
+- Benchmarks: 1.16
+
+* Notes
+only notable thing is that Its Doom emacs with little to no customization
+
+* Results
+
+  | test               | non-gc (s) | gc (s) | gcs | total (s) | err |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | bubble             |       0.46 |   0.09 |   1 |      0.56 |  3% |
+  | bubble-no-cons     |       0.61 |   0.00 |   0 |      0.61 |  1% |
+  | bytecomp           |       0.85 |   0.05 |   1 |      0.90 |  1% |
+  | dhrystone          |       1.54 |   0.00 |   0 |      1.54 |  0% |
+  | eieio              |       0.62 |   0.10 |   2 |      0.72 |  1% |
+  | fibn               |       0.00 |   0.00 |   0 |      0.00 |  5% |
+  | fibn-named-let     |       1.10 |   0.00 |   0 |      1.10 |  0% |
+  | fibn-rec           |       0.00 |   0.00 |   0 |      0.00 |  3% |
+  | fibn-tc            |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | flet               |       1.04 |   0.00 |   0 |      1.04 |  0% |
+  | font-lock          |       0.42 |   0.00 |   0 |      0.42 |  1% |
+  | inclist            |       1.33 |   0.00 |   0 |      1.33 |  1% |
+  | inclist-type-hints |       0.81 |   0.00 |   0 |      0.81 |  1% |
+  | listlen-tc         |       0.12 |   0.00 |   0 |      0.12 |  0% |
+  | map-closure        |       3.02 |   0.00 |   0 |      3.02 |  1% |
+  | nbody              |       0.91 |   0.12 |   1 |      1.02 |  2% |
+  | pack-unpack        |       0.18 |   0.00 |   0 |      0.18 |  1% |
+  | pack-unpack-old    |       0.30 |   0.05 |   1 |      0.35 |  1% |
+  | pcase              |       1.95 |   0.00 |   0 |      1.95 |  0% |
+  | pidigits           |       2.45 |   0.58 |   5 |      3.03 |  1% |
+  | scroll             |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | scroll-nonascii    |       0.00 |   0.00 |   0 |      0.00 |  0% |
+  | smie               |       0.91 |   0.00 |   0 |      0.91 |  0% |
+  | smie-nonascii      |       1.75 |   0.00 |   0 |      1.75 |  1% |
+  |--------------------+------------+--------+-----+-----------+-----|
+  | total              |      20.38 |   0.98 |  11 |     21.37 |  0% |

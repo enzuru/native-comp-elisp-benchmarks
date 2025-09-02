@@ -9,11 +9,11 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 3. Apple Silicon M4: 16.01s
 4. AMD Ryzen 5900X: 20s
 5. AMD Ryzen 9800X3D: 20.28s
-6. Intel i3 14100F: 20.87s
-7. Intel i5 12500H: 21.37s
-8. Apple Silicon M3: 24.13s
-9. Intel i5 1350P: 25.23s
-10. AMD Ryzen 5700G: 25.51s
+6. AMD Ryzen 5700G: 20.79s
+7. Intel i3 14100F: 20.87s
+8. Intel i5 12500H: 21.37s
+9. Apple Silicon M3: 24.13s
+10. Intel i5 1350P: 25.23s
 
 ## Submit your own
 

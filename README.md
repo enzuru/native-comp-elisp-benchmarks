@@ -19,11 +19,16 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 
 Submit an org file with your benchmark results!
 
-0. Install the `elisp-benchmarks` package from ELPA: https://elpa.gnu.org/packages/elisp-benchmarks.html
-1. Run the `elisp-benchmarks-run` command to run the test and create the test results buffer
-2. Save the buffer as `cpu-name.org` in the `cpu/` folder
-3. Above the test results, Add a "Specs" section with your full CPU name, OS name + version, Emacs version, and `elisp-benchmarks` version (see existing CPU org files for an example)
-4. You can optionally add a "Notes" section between "Specs" and "Results"
+1. Install the `elisp-benchmarks` package from ELPA: https://elpa.gnu.org/packages/elisp-benchmarks.html
+2. Set the following `elisp-benchmarks` variables: 
+```lisp
+(setq elb-speed native-comp-speed)
+(setq elb-safety compilation-safety)
+```
+3. Run the `elisp-benchmarks-run` command to run the test and create the test results buffer
+4. Save the buffer as `cpu-name.org` in the `cpu/` folder
+5. Above the test results, Add a "Specs" section with your full CPU name, OS name + version, Emacs version, and `elisp-benchmarks` version (see existing CPU org files for an example)
+6. You can optionally add a "Notes" section between "Specs" and "Results"
 
 It's OK to adjust Emacs settings to get a higher benchmark score. Just document what settings you used.
 

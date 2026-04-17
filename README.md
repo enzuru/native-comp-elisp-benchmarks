@@ -9,18 +9,17 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 3. Apple Silicon M4: 16.01s
 4. Intel Core i7-12700H: 19.22s
 5. AMD Ryzen 5900X: 20s
-6. AMD Ryzen 9800X3D: 20.28s
-7. AMD Ryzen 5700G: 20.79s
-8. Intel i3 14100F: 20.87s
-9. Intel i5 12500H: 21.37s
-10. Apple Silicon M3: 24.13s
+6. AMD Ryzen 5700G: 20.79s
+7. Intel i3 14100F: 20.87s
+8. Intel i5 12500H: 21.37s
+9. Apple Silicon M3: 24.13s
 
 ## Submit your own
 
 Submit an org file with your benchmark results!
 
 1. Install the `elisp-benchmarks` package from ELPA: https://elpa.gnu.org/packages/elisp-benchmarks.html
-2. Set the following `elisp-benchmarks` variables: 
+2. Set the following `elisp-benchmarks` variables:
 ```lisp
 (setq elb-speed native-comp-speed)
 (setq elb-safety compilation-safety)

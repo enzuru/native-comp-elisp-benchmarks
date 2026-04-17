@@ -19,7 +19,7 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 Submit an org file with your benchmark results!
 
 1. Install the `elisp-benchmarks` package from ELPA: https://elpa.gnu.org/packages/elisp-benchmarks.html
-2. Set the following `elisp-benchmarks` variables:
+2. Set the following `elisp-benchmarks` variables so that we're testing the actual comp settings that your Emacs uses:
 ```lisp
 (setq elb-speed native-comp-speed)
 (setq elb-safety compilation-safety)

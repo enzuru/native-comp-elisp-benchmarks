@@ -7,7 +7,10 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 We had to reset the high scores and exclude all scores that didn't use accurate Emacs settings (now documented below), so the below list may seem unusual if you are just looking at scores.
 
 1. AMD Ryzen 9800X3D: 32.35s
-2. AMD Ryzen 5700U: 54.94s
+2. Intel Core i5-7500T: 53.48s
+3. AMD Ryzen 5700U: 54.94s
+4. Intel Core i7-5600U: 71.79s
+5. Intel N150: 73.86s
 
 ## Submit your own
 

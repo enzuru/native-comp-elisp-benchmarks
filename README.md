@@ -4,15 +4,10 @@ This is a repo of elisp-benchmarks with native compilation run on different CPUs
 
 ## High scores
 
-1. AMD Ryzen 7950X: 14.36s
-2. AMD Ryzen 9900X: 15.04s
-3. Apple Silicon M4: 16.01s
-4. Intel Core i7-12700H: 19.22s
-5. AMD Ryzen 5900X: 20s
-6. AMD Ryzen 5700G: 20.79s
-7. Intel i3 14100F: 20.87s
-8. Intel i5 12500H: 21.37s
-9. Apple Silicon M3: 24.13s
+We had to reset the high scores and exclude all scores that didn't use accurate Emacs settings (now documented below), so the below list may seem unusual if you are just looking at scores.
+
+1. AMD Ryzen 9800X3D: 32.35s
+2. AMD Ryzen 5700U: 54.94s
 
 ## Submit your own
 
